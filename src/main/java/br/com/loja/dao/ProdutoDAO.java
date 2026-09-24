@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import br.com.loja.model.Produto;
 import java.util.List;
 
+// o jpa repository é uma interface que estende a interface JpaRepository do Spring Data JPA. Ele fornece métodos para realizar operações CRUD (Create, Read, Update, Delete) em entidades do banco de dados. No caso do ProdutoRepository, ele é usado para gerenciar a entidade Produto.
 @Repository
 public class ProdutoDAO { // Nome corrigido para ProdutoDAO
 

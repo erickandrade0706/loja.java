@@ -1,54 +1,66 @@
 package br.com.loja.model;
 
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 
 @Entity
-@Table(name="Produtos")
-
+@Table(name = "Produtos")
 public class Produto {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    // Identificador único do produto no banco de dados
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(nullable = false, length = 255)
-	private String descricao;
+    // Descrição detalhada do produto; campo obrigatório
+    @Column(nullable = false, length = 255)
+    private String descricao;
 
-	@Column(nullable = false)
-	private Integer quantidade;
+    // Quantidade disponível em estoque
+    @Column(nullable = false)
+    private Integer quantidade;
 
-	@Column(nullable = false, length = 100)
-	private String nome;
+    // Nome do produto exibido ao usuário
+    @Column(nullable = false, length = 100)
+    private String nome;
 
-	@Column(nullable = false, precision = 10, scale = 2)
-	private BigDecimal preco;// Atualizado para BigDecimal
+    // Valor do produto com precisão monetária de 2 casas decimais
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal preco;
 
-	// Construtores
-	public Produto() {}
+    // Cada produto pertence a uma categoria
+    @ManyToOne
+    @JoinColumn(name = "categoria_id", nullable = false)
+    private Categoria categoria;
 
-	public Produto(Long id, String nome, BigDecimal preco, Integer quantidade,String descricao) {
-		this.id = id;
-		this.nome = nome;
-		this.preco = preco;
-		this.quantidade = quantidade;
-		this.descricao = descricao;
-	}
+    // Construtor padrão exigido pelo JPA
+    public Produto() {}
 
-	// Getters e Setters
-	public Long getId() { return id; }
-	public void setId(Long id) { this.id = id; }
+    // Construtor auxiliar para instanciar um produto com os dados principais
+    public Produto(Long id, String nome, BigDecimal preco, Integer quantidade, String descricao) {
+        this.id = id;
+        this.nome = nome;
+        this.preco = preco;
+        this.quantidade = quantidade;
+        this.descricao = descricao;
+    }
 
-	public String getNome() { return nome; }
-	public void setNome(String nome) { this.nome = nome; }
+    // Getters e setters para acesso aos atributos da entidade
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-	public BigDecimal getPreco() { return preco; }
-	public void setPreco(BigDecimal preco) { this.preco = preco; }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
 
-	public Integer getQuantidade() {return quantidade;}
-	public void setQuantidade(Integer quantidade) {this.quantidade = quantidade;}
+    public BigDecimal getPreco() { return preco; }
+    public void setPreco(BigDecimal preco) { this.preco = preco; }
 
-	public String getDescricao() {return descricao;}
-	public void setDescricao(String descricao) {this.descricao = descricao;}
+    public Integer getQuantidade() { return quantidade; }
+    public void setQuantidade(Integer quantidade) { this.quantidade = quantidade; }
+
+    public String getDescricao() { return descricao; }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
+
+    public Categoria getCategoria() { return categoria; }
+    public void setCategoria(Categoria categoria) { this.categoria = categoria; }
 }
